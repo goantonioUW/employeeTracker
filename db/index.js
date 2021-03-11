@@ -21,6 +21,7 @@ module.exports = {
 
     createRole(data) {
         return connection.query("INSERT INTO role SET ?", data);
+    
     },
 
     createDepartment(data) {

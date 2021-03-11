@@ -2,7 +2,7 @@ const db = require("./db");
 const inquirer = require("inquirer");
 const connection = require("./db/connection");
 const mysql = require("mysql");
-
+const sqlStatements = require("./db/index.js");
 
 function startingPrompt() {
     inquirer
@@ -80,41 +80,34 @@ function viewEmployee(){
     });
 };
 
-function createDepartment(){
-    db.viewDepartment()
-    .then((department) => {
-        const departmentChoices = department.map((department) => ({
-            value: department.department_id,
-            name: department.name
-        }))
-        inquirer
-            .prompt({
-                name: "department_name",
-                type: "input",
-                message: "What is the department name?",
+function createDepartment() {
+    inquirer
+        .prompt({
+            name: "department_name",
+            type: "input",
+            message: "What is the name of the department?",
         })
-        .then(res => {
-            console.table(res);
+        .then(response => {
+            db.createDepartment(response);
+            viewDepartment();
             startingPrompt();
         })
-    })
-    
-
-};
+}
 
 function createRole() {
     db.viewDepartment()
     .then((department) => {
         const departmentChoices = department.map((department) => ({
-            value: department.department_id,
-            name: department.name
+            value: department.id,
+            name: department.department_name
         }))
         inquirer.prompt([
             {
                 message: "What department is this role for?",
-                type: "input",
+                type: "list",
                 name: "department_id",
                 choices: departmentChoices
+
             },
             {
                 message: "What is the salary for this position?",
@@ -127,7 +120,10 @@ function createRole() {
                 name: "title"
             }
         ]).then(res => {
-            console.table(res);
+            // console.table(res);
+            console.log(res);
+            sqlStatements.createRole(res);
+            viewRole();
             startingPrompt();
         })
     })
@@ -138,7 +134,7 @@ function createEmployee(){
     db.viewRole()
     .then((role) => {
         const roleChoices = role.map((roles) => ({
-            value: roles.role_id,
+            value: roles.id,
             name: roles.title
         }))
         inquirer.prompt([
@@ -161,7 +157,7 @@ function createEmployee(){
         ]).then(res => {
             console.log(res);
             console.log(roleChoices);
-            db.insertEmployee(res);
+            sqlStatements.createEmployee(res);
             startingPrompt();
         })
     })
