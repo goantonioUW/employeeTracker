@@ -9,4 +9,4 @@
   * Update employee roles and Delete employees
 
   [Demo](./assets/employeeTracker.gif)
-  ![screenshot](https://github.com/goantonioUW/employeeTracker/blob/master/Assets/Screenschot.png)
+  [screenshot](https://github.com/goantonioUW/employeeTracker/blob/master/Assets/Screenschot.png)
