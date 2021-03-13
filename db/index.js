@@ -32,8 +32,12 @@ module.exports = {
         return connection.query("INSERT INTO employee SET ?", data);
     },
 
-    deleteEmployees(data) {
-        return connect.query("DELETE FROM employee WHERE ?", data)
+    deleteEmployee(data) {
+        return connection.query("DELETE FROM employee WHERE ?", data)
+    },
+    updateEmployeeRoles(){
+        return connection.query("UPDATE FROM employee WHERE ?", data)
     }
+
 
 }

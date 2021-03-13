@@ -3,6 +3,8 @@ const inquirer = require("inquirer");
 const connection = require("./db/connection");
 const mysql = require("mysql");
 const sqlStatements = require("./db/index.js");
+const util = require('util');
+const query = util.promisify(connection.query).bind(connection);
 
 function startingPrompt() {
     inquirer
@@ -17,6 +19,8 @@ function startingPrompt() {
                 "CREATE_ROLE",
                 "CREATE_DEPARTMENT",
                 "CREATE_EMPLOYEE",
+                "UPDATE_EMPLOYEE_ROLES",
+                "DELETE_EMPLOYEE",
                 "QUIT"
             ]
 
@@ -45,6 +49,12 @@ function startingPrompt() {
 
                 case "CREATE_EMPLOYEE":
                     createEmployee();
+                    return;
+                case "UPDATE_EMPLOYEE_ROLES":
+                    updateEmployeeRoles();
+                    return;
+                case "DELETE_EMPLOYEE":
+                    deleteEmployee();
                     return;
 
                 default:
@@ -162,6 +172,53 @@ function createEmployee(){
         })
     })
 };
+
+async function updateEmployeeRoles() {
+    var userInput= await inquirer.prompt([{
+        type:"input",
+        message:"what is the employee id?",
+        name:"employee_id"
+    },{
+        type:"input",
+        message:"enter the new role id!",
+        name:"new_role"
+    }])
+    results =await query("update employee set role_id = ? where id =?",[userInput.new_role, userInput.employee_id])
+    console.log("update")
+    viewEmployee()
+}
+
+function deleteEmployee(id, last_name) {
+    db.viewEmployee()
+    .then((employees) => {
+
+            console.table(employees);
+
+            const employeeChoices = employees.map((employees) => ({
+                value: employees.id,
+                name: employees.last_name
+            }))
+            console.log(id, last_name);
+            console.table(employeeChoices);
+
+        inquirer
+            .prompt({
+                    name: 'id',
+                    type: 'list',
+                    message: "select the employee's lastname taht you want to remove?",
+                    choices: employeeChoices,
+            })
+            .then((response) => {
+                console.table(response);
+                const data = {id: response.id}
+                
+                db.deleteEmployee(data);
+                startingPrompt()
+            })
+        })
+}
+
+
 
 
 startingPrompt();
