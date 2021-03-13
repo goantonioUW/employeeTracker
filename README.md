@@ -8,4 +8,4 @@
 
   * Update employee roles and Delete employees
 
-  ![Demo](./assets/employeeTracker.gif)
+  ![Demo](./Assets/employeeTracker.gif)
