@@ -8,5 +8,7 @@
 
   * Update employee roles and Delete employees
 
-  [  ![screenshot](https://github.com/goantonioUW/employeeTracker/blob/master/Assets/Screenshot.png)](./Assets/employeeTracker.gif)
+ ## Click on the image to view the live demo!
+ 
+  [  ![screenshot](https://github.com/goantonioUW/employeeTracker/blob/master/Assets/Screenshot.png)](./Assets/employeeTrackerGif.gif)
 
