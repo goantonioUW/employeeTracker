@@ -30,32 +30,32 @@ function startingPrompt() {
             switch (res.action) {
                 case "VIEW_DEPARTMENT":
                     viewDepartment();
-                    return;                
+                    break;                
 
                 case "VIEW_ROLE":
                     viewRole()
-                    return;
+                    break;
 
                 case "VIEW_EMPLOYEE":
                     viewEmployee()
-                    return;
+                    break;
 
                     case "CREATE_ROLE":
                     createRole();
-                    return;
+                    break;
                 case "CREATE_DEPARTMENT":
                     createDepartment();
-                    return;
+                    break;
 
                 case "CREATE_EMPLOYEE":
                     createEmployee();
-                    return;
+                    break;
                 case "UPDATE_EMPLOYEE_ROLES":
                     updateEmployeeRoles();
-                    return;
+                    break;
                 case "DELETE_EMPLOYEE":
                     deleteEmployee();
-                    return;
+                    break;
 
                 default:
                connection.end();
@@ -99,7 +99,6 @@ function createDepartment() {
         })
         .then(response => {
             db.createDepartment(response);
-            viewDepartment();
             startingPrompt();
         })
 }
@@ -133,7 +132,6 @@ function createRole() {
             // console.table(res);
             console.log(res);
             sqlStatements.createRole(res);
-            viewRole();
             startingPrompt();
         })
     })
@@ -205,13 +203,13 @@ function deleteEmployee(id, last_name) {
             .prompt({
                     name: 'id',
                     type: 'list',
-                    message: "select the employee's lastname taht you want to remove?",
+                    message: "select the employee's lastname that you want to remove?",
                     choices: employeeChoices,
             })
             .then((response) => {
                 console.table(response);
                 const data = {id: response.id}
-                
+
                 db.deleteEmployee(data);
                 startingPrompt()
             })
